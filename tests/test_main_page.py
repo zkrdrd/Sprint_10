@@ -1,4 +1,14 @@
-from pages.main_page import MainPage
+"""Отрисовка маршрута:
+
+Тебе нужно проверить:
+
+    При вводе двух разных предустановленных адресов в поля "Откуда" и "Куда"
+        на карте отображаются две точки начала и конца маршрута
+"""
+
+import allure
+
+from pages import MainPage
 
 
 class TestMainPage:
@@ -8,8 +18,11 @@ class TestMainPage:
         mp = MainPage(driver)
         assert mp.get_workflow_position()["x"] < mp.get_map_position()["x"]
 
-    def test_visible_point_route(self, driver):
+    @allure.title('При вводе двух разных адресов в поля "Откуда" и "Куда" \
+        на карте отображаются две точки начала и конца маршрута')
+    def test_route_points_is_display(self, driver):
+        """Проверка отображения точек 'A', 'B' на карте"""
         mp = MainPage(driver)
-        mp.input_to()
-        mp.input_from_is_to()
+        mp.input_to_zubovsky_boulevard_37()
+        mp.input_from_khamovnicheskiy_val_34()
         assert mp.route_points_is_displayed()
